@@ -1,0 +1,52 @@
+package main
+
+import "fmt"
+
+type CurrentAccount struct {
+	holder  string
+	agency  int
+	account int
+	balance float64
+}
+
+func main() {
+	// Instância parcial ou completa
+	felipeAccount := CurrentAccount{holder: "Felipe", balance: 115.5}
+	felipeAccount2 := CurrentAccount{holder: "Felipe", balance: 115.5}
+
+	fmt.Println(felipeAccount == felipeAccount2)
+
+	anaAccount := CurrentAccount{"Ana", 321, 123123, 200}
+	fmt.Println(felipeAccount)
+	fmt.Println(anaAccount)
+
+	// Instância com "new", com declaração explícita de ponteiro
+	var gleisonAccount *CurrentAccount
+	gleisonAccount = new(CurrentAccount)
+	gleisonAccount.holder = "Gleison"
+	gleisonAccount.agency = 567
+	gleisonAccount.account = 123987
+	gleisonAccount.balance = 120
+
+	fmt.Println(gleisonAccount)
+	fmt.Println(*gleisonAccount)
+
+	var gleisonAccount2 *CurrentAccount
+	gleisonAccount2 = new(CurrentAccount)
+	gleisonAccount2.holder = "Gleison"
+	gleisonAccount2.agency = 567
+	gleisonAccount2.account = 123987
+	gleisonAccount2.balance = 120
+
+	fmt.Println(gleisonAccount2)
+	fmt.Println(*gleisonAccount2)
+
+	fmt.Println(gleisonAccount == gleisonAccount2) // Comparando endereços da memória
+	fmt.Println(*gleisonAccount == *gleisonAccount2)
+
+	// Instância com "new" sem declaração explícita de ponteiro
+	carolAccount := new(CurrentAccount)
+	carolAccount.holder = "Carol"
+
+	fmt.Println(carolAccount)
+}
