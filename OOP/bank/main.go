@@ -6,15 +6,22 @@ import (
 	"github.com/PhilipFelipe/golang-alura-course/entity"
 )
 
+func payBill(account verifyAccount, value float64) {
+	account.Withdraw(value)
+}
+
+type verifyAccount interface {
+	Withdraw(value float64) string
+}
+
 func main() {
-	felipeAccount := entity.CurrentAccount{Holder: "Felipe", Balance: 500, Agency: 1234, Account: 123321}
-	anaAccount := entity.CurrentAccount{Holder: "Ana", Balance: 500, Agency: 4321, Account: 159987}
+	gleisonAccount := entity.SavingAccount{}
+	gleisonAccount.Deposit(1000)
+	payBill(&gleisonAccount, 150) // o método Withdraw da struct tem um receptor com ponteiro, ex: >>s *SavingAccount<<, por isso o endereço é necessário
 
-	fmt.Println(felipeAccount.Balance)
-	fmt.Println(anaAccount.Balance)
-	status := felipeAccount.Transfer(100, &anaAccount)
-	fmt.Println(status)
-	fmt.Println(felipeAccount.Balance)
-	fmt.Println(anaAccount.Balance)
-
+	carolAccount := entity.CurrentAccount{}
+	carolAccount.Deposit(1050)
+	payBill(&carolAccount, 10000)
+	fmt.Println(gleisonAccount.GetBalance())
+	fmt.Println(carolAccount.GetBalance())
 }
