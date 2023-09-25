@@ -29,6 +29,10 @@ func CreateStudent(c *gin.Context) {
 		})
 		return
 	}
+	if err := models.Validate(&student); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	database.DB.Create(&student)
 	c.JSON(http.StatusOK, student)
 }
@@ -63,6 +67,10 @@ func UpdateStudent(c *gin.Context) {
 		})
 		return
 	}
+	if err := models.Validate(&student); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	database.DB.Model(&student).UpdateColumns(student)
 	c.JSON(http.StatusOK, student)
 }
@@ -76,4 +84,16 @@ func RetrieveByCPF(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, student)
+}
+
+func ShowIndexPage(c *gin.Context) {
+	var students []models.Student
+	database.DB.Find(&students)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"students": students,
+	})
+}
+
+func NotFoundRoute(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "404.html", nil)
 }

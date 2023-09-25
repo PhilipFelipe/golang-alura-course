@@ -14,7 +14,7 @@ var (
 )
 
 func DbConnect() {
-	connStr := "host= user= password= dbname= port= sslmode=disable"
+	connStr := "host= user= password= dbname= port=5432 sslmode=disable"
 	DB, err = gorm.Open(postgres.Open(connStr))
 	if err != nil {
 		log.Panic("Error connecting to the dabatase")
