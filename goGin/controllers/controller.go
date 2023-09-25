@@ -6,8 +6,20 @@ import (
 	"github.com/PhilipFelipe/golang-alura-course/database"
 	"github.com/PhilipFelipe/golang-alura-course/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/swaggo/swag/example/celler/httputil"
 )
 
+// ListStudents godoc
+//
+//	@Summary		List all registered students
+//	@Description	List students
+//	@Tags			students
+//	@Produce		json
+//	@Success		200	{object}	[]models.Student
+//	@Failure		400	{object}	httputil.HTTPError
+//	@Failure		404	{object}	httputil.HTTPError
+//	@Failure		500	{object}	httputil.HTTPError
+//	@Router			/students [get]
 func ListStudents(c *gin.Context) {
 	var students []models.Student
 	database.DB.Find(&students)
